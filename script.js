@@ -24,11 +24,13 @@ const Game = (()=>{
    // ------------------Play functionality && Player creation----------------------
    const p1 = player('player1', "X", true);
    const p2 = player('player2', "O", false);
+   const aicheck = document.getElementById('AI');
 const play = () =>{
   containerEl.style.display = "flex";
   playerselectionEl.style.display = "none";
   const player1 = document.querySelector('#player1').value;
   const player2 = document.querySelector('#player2').value;
+
   p1.name = player1;
   p2.name = player2;
   turnEl.textContent = `${p1.name} TURN (X)`;
@@ -44,6 +46,10 @@ playEl.addEventListener('click', play);
       boxesEl.forEach((btn)=>{
         btn.textContent = "";
        
+      })
+      const revertboxes = document.querySelectorAll('.result-box');
+      revertboxes.forEach((winbox)=>{
+        winbox.classList.toggle('result-box');
       })
       gamewon = false;
       p1.turn = true;
@@ -73,10 +79,12 @@ playEl.addEventListener('click', play);
       turnEl.textContent = `${p2.name} TURN (O)`;
       let index = e.target.getAttribute("id") - 1;
       board[index] = p1.mark;
-      console.log(board);
       checkwin();
+      // if(aicheck.checked){
+      //   aihandle();
+      // }
     }
-    else if(p2.turn === true && box.textContent === "" && gamewon === false){
+    else if(p2.turn === true && box.textContent === "" && gamewon === false && !aicheck.checked){
       box.textContent = p2.mark;
       x.play();
       p2.turn = false;
@@ -84,35 +92,53 @@ playEl.addEventListener('click', play);
       turnEl.textContent = `${p1.name} TURN (X)`;
       let index = e.target.getAttribute("id") - 1;
       board[index] = p2.mark; 
-      console.log(board);
       checkwin();
     }
   })
  })
 
+//  ----------------AI Handle--------------
+
+const aihandle = () =>{
+  let randombox = Math.floor(Math.random() * 9) + 1;
+  var aibox = document.getElementById(`${randombox}`)
+    
+  if(p2.turn === true && aibox.textContent === "" && gamewon === false) {
+    aibox.textContent = p2.mark;
+    x.play();
+    p2.turn = false;
+    p1.turn = true;
+    turnEl.textContent = `${p1.name} TURN (X)`;
+    let index = randombox - 1;
+    board[index] = p2.mark;
+    checkwin();
+    console.log(board);
+  }
+  
+}
 //  --------------CHECK WIN-----------------------
-let turn = 0;
+var turn = 0;
 const checkwin = ()=>{
   turn++;
   wins.forEach((win)=>{
     if(board[win[0]-1] === board[win[1]-1] && board[win[1]-1] === board[win[2] -1]  && board[win[0]-1] !== ""){
       if(board[win[0]-1] === "X"){
       turnEl.textContent = `${p1.name} (X): Wins!`;
-      for(let i = 0; i<4; i++){
-        let resultbox = document.getElementById(`${win[i]}`);
-        resultbox.style.background = "white";
-      }
       turnEl.style.background = `url("https://cliply.co/wp-content/uploads/2019/08/371908020_CONFETTI_400px.gif")`;
       gamewon = true;
+      win.forEach((id)=>{
+      let resultbox = document.getElementById(`${id}`);
+      resultbox.classList.toggle("result-box");
+      })
       }
       else if(board[win[0]-1] === "O"){
         turnEl.textContent = `${p2.name} (O): Wins!`;
-        for(let i = 0; i<4; i++){
-          let resultbox = document.getElementById(`${win[i]}`);
-          resultbox.style.background = "white";
-        }
         turnEl.style.background = `url("https://cliply.co/wp-content/uploads/2019/08/371908020_CONFETTI_400px.gif")`;
         gamewon = true;
+      win.forEach((id)=>{
+      let resultbox = document.getElementById(`${id}`);
+      resultbox.classList.toggle('result-box');
+      })
       }
     }
    else if(turn >= 9){
