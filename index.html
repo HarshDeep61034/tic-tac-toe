@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Tic-Tac-Toe</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Alkatra&family=Poppins:wght@500&display=swap');
+      </style>
+</head>
+<body>
+    <audio id="myAudio">
+        <source src="audio.wav" type="audio/wav">
+      </audio>
+    <h1>TIC TAC TOE</h1>
+    <div class="turn"></div>
+    <main>
+        <div class="players">
+            <h2>Players Selection</h2>
+            <!-- <label for="playerselection">Play Against!!</label>
+            <input type="checkbox" name="playerselection" id="AI">AI <br>
+            <input type="checkbox" name="playerselection" id="Player">Player 2 <br> -->
+            <div>Player 1: <br><input type="text" id="player1" placeholder="John Wick"></div>
+            <div>Player 2: <br><input type="text" id="player2" placeholder="Reacher"></div>
+            <button type="button" id="play">Play</button>
+        </div>
+        <div class="container">
+<div class="boxes blue" id="1"></div>
+<div class="boxes red" id="2"></div>
+<div class="boxes blue" id="3"></div>
+<div class="boxes red" id="4"></div>
+<div class="boxes red" id="5"></div>
+<div class="boxes red" id="6"></div>
+<div class="boxes blue" id="7"></div>
+<div class="boxes red" id="8"></div>
+<div class="boxes blue" id="9"></div>
+           
+        </div>
+        <button id="start">start</button>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
